@@ -1,11 +1,11 @@
-import ErrorMessage from './copmonents/ErrorMessage/ErrorMessage';
-import ImageGallery from './copmonents/ImageGallery/ImageGallery';
-import ImageModal from './copmonents/ImageModal/ImageModal';
-import Loader from './copmonents/Loader/Loader';
-import LoadMoreBtn from './copmonents/LoadMoreBtn/LoadMoreBtn';
-import SearchBar from './copmonents/SearchBar/SearchBar';
+import ErrorMessage from './components/ErrorMessage/ErrorMessage';
+import ImageGallery from './components/ImageGallery/ImageGallery';
+import ImageModal from './components/ImageModal/ImageModal';
+import Loader from './components/Loader/Loader';
+import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn';
+import SearchBar from './components/SearchBar/SearchBar';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { getPhotos } from './apiService/photos';
 
 const App = () => {
