@@ -1,0 +1,12 @@
+.load_btn {
+  display: block;
+  margin-inline: auto;
+  width: 100px;
+  height: auto;
+  padding: 8px;
+  text-align: center;
+  color: white;
+  background-color: rgb(40, 111, 240);
+  border-radius: 5px;
+  cursor: alias;
+}
