@@ -5,7 +5,7 @@ import Loader from './components/Loader/Loader';
 import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn';
 import SearchBar from './components/SearchBar/SearchBar';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { getPhotos } from './apiService/photos';
 
 const App = () => {
@@ -29,7 +29,10 @@ const App = () => {
   };
 
   const onLoadMore = () => {
-    setPage({ ...page, currentPage: page.currentPage + 1 });
+    setPage(prevPage => ({
+      ...prevPage,
+      currentPage: prevPage.currentPage + 1,
+    }));
   };
 
   const isOpen = imageData => {
@@ -47,14 +50,17 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (!query) {
-      return;
-    }
+    if (!query) return;
+
     const getData = async () => {
       setIsLoading(true);
       try {
         const data = await getPhotos(query, page.currentPage);
-        setPage({ ...page, totalPages: data.total_pages });
+        setPage(prevPage => ({
+          ...prevPage,
+          totalPages: data.total_pages,
+        }));
+
         setPhotos(prevPhotos =>
           page.currentPage === 1
             ? data.results
@@ -68,6 +74,16 @@ const App = () => {
     };
     getData();
   }, [page.currentPage, query]);
+
+  useEffect(() => {
+    if (page.currentPage > 1) {
+      const scrollValue = window.innerHeight / 1.5;
+      window.scrollBy({
+        top: scrollValue,
+        behavior: 'smooth',
+      });
+    }
+  }, [photos]);
 
   return (
     <>

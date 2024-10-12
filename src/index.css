@@ -1,9 +1,22 @@
 #root {
-  max-width: 1200px;
-  padding: 20px;
+  max-width: 320px;
+  padding: 10px;
   padding-top: 0;
   margin: 0 auto;
   text-align: center;
+}
+
+@media (min-width: 768px) {
+  #root {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1200px) {
+  #root {
+    max-width: 1200px;
+    padding-inline: 20px;
+  }
 }
 
 h1,

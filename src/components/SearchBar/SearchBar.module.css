@@ -1,17 +1,19 @@
 .header {
   position: fixed;
-  width: 1160px;
+  width: 300px;
   background-color: rgb(40, 111, 240);
   padding: 10px;
   text-align: center;
   margin-bottom: 25px;
   z-index: 999;
 }
+
 .form {
   margin: 0 auto;
-  width: 400px;
+  width: 100%;
   position: relative;
 }
+
 .input {
   padding: 10px;
   padding-left: 40px;
@@ -20,6 +22,7 @@
   border-radius: 5px;
   border: transparent;
 }
+
 .button {
   position: absolute;
   top: 53%;
@@ -27,5 +30,21 @@
   transform: translateY(-50%);
   cursor: alias;
 }
-.header .toast {
+
+@media (min-width: 768px) {
+  .header {
+    width: 748px;
+  }
+  .input {
+    width: 80%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .header {
+    width: 1160px;
+  }
+  .input {
+    width: 65%;
+  }
 }
