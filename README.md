@@ -1,1 +1,1 @@
-Project Template for Homework React
+Homework React TypeScript 02

@@ -1,12 +1,12 @@
-import ErrorMessage from './components/ErrorMessage/ErrorMessage';
-import ImageGallery from './components/ImageGallery/ImageGallery';
-import ImageModal from './components/ImageModal/ImageModal';
-import Loader from './components/Loader/Loader';
-import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn';
-import SearchBar from './components/SearchBar/SearchBar';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import ImageGallery from '../ImageGallery/ImageGallery';
+import ImageModal from '../ImageModal/ImageModal';
+import Loader from '../Loader/Loader';
+import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn';
+import SearchBar from '../SearchBar/SearchBar';
 
 import { useState, useEffect } from 'react';
-import { getPhotos } from './apiService/photos';
+import { getPhotos } from '../../apiService/photos';
 
 const App = () => {
   const [query, setQuery] = useState('');
