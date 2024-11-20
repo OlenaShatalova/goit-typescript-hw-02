@@ -7,46 +7,39 @@ import SearchBar from '../SearchBar/SearchBar';
 
 import { useState, useEffect } from 'react';
 import { getPhotos } from '../../apiService/photos';
+import { IimageData } from './App.types';
 
-const App = () => {
-  const [query, setQuery] = useState('');
-  const [photos, setPhotos] = useState([]);
-  const [error, setError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [page, setPage] = useState({ currentPage: 1 });
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState({
-    urls: {
-      regular: '',
-    },
-  });
+const App: React.FC<{}> = () => {
+  const [query, setQuery] = useState<string | null>(null);
+  const [photos, setPhotos] = useState<object[]>([]);
+  const [error, setError] = useState<boolean | null>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [page, setPage] = useState<{ currentPage: number }>({ currentPage: 1 });
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [selectedImage, setSelectedImage] = useState<IimageData | null>(null);
 
-  const onSubmit = query => {
+  const onSubmit = (query: string): void => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setPage({ currentPage: 1 });
     setQuery(query);
     setError(null);
   };
 
-  const onLoadMore = () => {
+  const onLoadMore: () => void = () => {
     setPage(prevPage => ({
       ...prevPage,
       currentPage: prevPage.currentPage + 1,
     }));
   };
 
-  const isOpen = imageData => {
-    const { urls, alt_description, likes } = imageData;
+  const isOpen = (imageData: IimageData) => {
     setModalIsOpen(true);
-    setSelectedImage({
-      urls,
-      alt_description,
-      likes,
-    });
+    setSelectedImage(imageData);
   };
 
-  const onClose = () => {
+  const onClose: () => void = () => {
     setModalIsOpen(false);
+    setSelectedImage(null);
   };
 
   useEffect(() => {
@@ -95,11 +88,13 @@ const App = () => {
         <LoadMoreBtn onClick={onLoadMore} />
       )}
 
-      <ImageModal
-        isOpen={modalIsOpen}
-        onClose={onClose}
-        selectedImage={selectedImage}
-      />
+      {modalIsOpen && selectedImage !== null && (
+        <ImageModal
+          isOpen={modalIsOpen}
+          onClose={onClose}
+          selectedImage={selectedImage}
+        />
+      )}
     </>
   );
 };
