@@ -1,4 +1,4 @@
-export interface IimageData {
+export interface IImageData {
   urls: {
     regular: string;
   };
