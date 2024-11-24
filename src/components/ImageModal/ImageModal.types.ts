@@ -1,4 +1,4 @@
-import { IimageData } from '../App/App.types';
+import { IImageData } from '../App/App.types';
 
 export interface ImageModalProps {
   isOpen: boolean;

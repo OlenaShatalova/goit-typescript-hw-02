@@ -1,6 +1,9 @@
 import css from './ImageCard.module.css';
+import 
 
-const ImageCard = ({ photo }) => {
+const ImageCard = ({ photo }: object) => {
+  console.log(photo);
+  
   return (
     <div className={css.thumb}>
       <img
