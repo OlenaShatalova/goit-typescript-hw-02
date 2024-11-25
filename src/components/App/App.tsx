@@ -5,7 +5,7 @@ import ImageModal from '../ImageModal/ImageModal';
 import Loader from '../Loader/Loader';
 import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn';
 import SearchBar from '../SearchBar/SearchBar';
-import { IImageData, IPage } from './App.types';
+import { IData, IImageData, IPage } from './App.types';
 import { getPhotos } from '../../apiService/photos';
 
 const App: React.FC<{}> = () => {
@@ -53,7 +53,9 @@ const App: React.FC<{}> = () => {
     const getData = async (): Promise<void> => {
       setIsLoading(true);
       try {
-        const data = await getPhotos(query, page.currentPage);
+        const data: IData = await getPhotos(query, page.currentPage);
+        console.log(data);
+
         setPage(prevPage => ({
           ...prevPage,
           totalPages: data.total_pages,

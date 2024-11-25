@@ -14,6 +14,10 @@ export interface IPage {
 }
 
 export interface IPhotoResponse {
-  total_pages: number;
   results: IImageData[];
+  total_pages: number;
+}
+
+export interface IData extends IPhotoResponse {
+  total: number;
 }
