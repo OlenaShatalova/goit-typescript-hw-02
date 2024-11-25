@@ -1,21 +1,23 @@
+import { useState, useEffect } from 'react';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import ImageGallery from '../ImageGallery/ImageGallery';
 import ImageModal from '../ImageModal/ImageModal';
 import Loader from '../Loader/Loader';
 import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn';
 import SearchBar from '../SearchBar/SearchBar';
-
-import { useState, useEffect } from 'react';
+import { IImageData, IPage } from './App.types';
 import { getPhotos } from '../../apiService/photos';
-import { IImageData, IPage, IPhotoResponse } from './App.types';
 
 const App: React.FC<{}> = () => {
   const [query, setQuery] = useState<string | null>(null);
-  const [photos, setPhotos] = useState<object[]>([]);
-  const [error, setError] = useState<boolean | null>(false);
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [photos, setPhotos] = useState<IImageData[]>([]);
+  const [error, setError] = useState<boolean | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [page, setPage] = useState<IPage>({ currentPage: 1, totalPages: 0 });
+  const [page, setPage] = useState<IPage>({
+    currentPage: 1,
+    totalPages: 0,
+  });
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<IImageData | null>(null);
 
@@ -33,9 +35,11 @@ const App: React.FC<{}> = () => {
     }));
   };
 
-  const isOpen = (imageData: IImageData): void => {
-    setModalIsOpen(true);
-    setSelectedImage(imageData);
+  const openModal = (imageData: IImageData): void => {
+    if (!modalIsOpen || selectedImage !== imageData) {
+      setModalIsOpen(true);
+      setSelectedImage(imageData);
+    }
   };
 
   const onClose: () => void = () => {
@@ -49,7 +53,7 @@ const App: React.FC<{}> = () => {
     const getData = async (): Promise<void> => {
       setIsLoading(true);
       try {
-        const data: IPhotoResponse = await getPhotos(query, page.currentPage);
+        const data = await getPhotos(query, page.currentPage);
         setPage(prevPage => ({
           ...prevPage,
           totalPages: data.total_pages,
@@ -61,10 +65,15 @@ const App: React.FC<{}> = () => {
             : [...prevPhotos, ...data.results]
         );
       } catch (error) {
-        // setError(true);
-        // setErrorMessage(
-        // error instanceof Error ? error.message : 'An unknown error occurred'
-        // );
+        console.log(error, 'catch');
+
+        if (error instanceof Error) {
+          console.log(error);
+          setError(true);
+          setErrorMessage(error.message);
+        } else {
+          setErrorMessage('Unknown error occurred');
+        }
       } finally {
         setIsLoading(false);
       }
@@ -85,14 +94,14 @@ const App: React.FC<{}> = () => {
   return (
     <>
       <SearchBar onSubmit={onSubmit} />
-      {query && <ImageGallery photos={photos} isOpen={isOpen} />}
+      {query && <ImageGallery photos={photos} isOpen={openModal} />}
       {isLoading && <Loader />}
-      {/* {error && <ErrorMessage error={errorMessage} />} */}
+      {error && <ErrorMessage error={errorMessage} />}
       {page.totalPages > page.currentPage && (
         <LoadMoreBtn onClick={onLoadMore} />
       )}
 
-      {modalIsOpen && selectedImage !== null && (
+      {modalIsOpen && selectedImage && (
         <ImageModal
           isOpen={modalIsOpen}
           onClose={onClose}

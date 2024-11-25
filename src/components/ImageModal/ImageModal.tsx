@@ -2,6 +2,7 @@ import ReactModal from 'react-modal';
 import { SlLike } from 'react-icons/sl';
 import { ImageModalProps } from './ImageModal.types';
 import css from './ImageModal.module.css';
+import { useEffect } from 'react';
 
 const ImageModal: React.FC<ImageModalProps> = ({
   isOpen,

@@ -1,5 +1,7 @@
+import { FormEvent } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { PiMagnifyingGlass } from 'react-icons/pi';
+import { SearchBarProps, Form } from './SearchBar.types';
 import css from './SearchBar.module.css';
 
 const toastStyle = {
@@ -9,10 +11,12 @@ const toastStyle = {
   background: 'white',
 };
 
-const SearchBar = ({ onSubmit }) => {
-  const handleSubmit = e => {
+const SearchBar: React.FC<SearchBarProps> = ({
+  onSubmit,
+}) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = e.target;
+    const form = e.target as Form;
     const value = form.elements.search.value.trim();
 
     value

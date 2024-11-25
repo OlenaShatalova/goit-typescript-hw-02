@@ -1,9 +1,7 @@
+import { ImageCardProps } from './ImageCard.types';
 import css from './ImageCard.module.css';
-import 
 
-const ImageCard = ({ photo }: object) => {
-  console.log(photo);
-  
+const ImageCard: React.FC<ImageCardProps> = ({ photo }) => {
   return (
     <div className={css.thumb}>
       <img
